@@ -1,0 +1,73 @@
+---
+# Sovereign main configuration file
+# just read the comments and fill all `TODO`s
+# This is YAML. indentation matters !
+
+
+############# common ###############
+
+# e.g. my-domain.com
+domain: TODO
+# This user is the default one in every service
+# You can override it in services config below
+default_user: TODO
+
+############ blog ############
+blog_domain: www.{{domain}}
+
+########### common ###########
+# unix user created on target box
+main_user_name: "{{default_user}}"
+# email address used to send monitoring alerts
+admin_email: "{{default_user}}@{{domain}}"
+encfs_password: TODO
+
+########### mailserver #########
+mail_server_hostname: mail.{{domain}}
+mail_mysql_username: mailuser
+mail_mysql_password: TODO
+mail_mysql_database: mailserver
+mail_virtual_domains:
+  - name: "{{domain}}"
+    pk_id: 1
+    primary_user: "{{default_user}}"
+
+  # add other virtual domains here
+  #- name: TODO
+  #  pk_id: 2
+  #  primary_user: TODO
+  #
+  
+mail_virtual_users:
+  - address: "{{default_user}}@{{domain}}"
+    # generate the hash with `mkpasswd -m sha-512 <password>`
+    password_hash: TODO
+    domain_pk_id: 1
+  # add other virtual domains here
+  #- address: TODO@TODO.com
+  #  password_hash: TODO@TODO.com
+  #  domain_pk_id: 2
+
+mail_virtual_aliases:
+  - source: postmaster@{{domain}}
+    destination: "{{default_user}}@{{domain}}"
+    domain_pk_id: 1
+
+########### owncloud ############
+owncloud_domain: cloud.{{domain}}
+owncloud_mysql_username: owncloud
+owncloud_mysql_password: TODO
+owncloud_mysql_database: owncloud
+
+########### vpn ###############
+key_country: TODO
+key_province: TODO
+key_city: TODO
+key_org: TODO
+key_email: TODO
+key_ou: TODO
+key_cn: TODO
+key_name: TODO
+
+########## webmail ###########
+webmail_domain: "{{mail_server_hostname}}"
